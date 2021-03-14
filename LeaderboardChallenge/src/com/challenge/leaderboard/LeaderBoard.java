@@ -2,6 +2,8 @@ package com.challenge.leaderboard;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class LeaderBoard {
@@ -52,11 +54,31 @@ public class LeaderBoard {
 			
 			winner = String.format("%s %d", winner, maxDifference);
 			
-			System.out.println(winner);
+			createFile(winner);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static void createFile(String winner) {
+		try {
+		      File myObj = new File("D:\\Tablero-Winner.txt");
+		      
+		      myObj.createNewFile();
+		      writeFile(winner);		      
+		    } catch (IOException e) {
+		      e.printStackTrace();
+		    }
+	}
+	
+	public static void writeFile(String winner) {
+		try {
+	          FileWriter myWriter = new FileWriter("D:\\Tablero-Winner.txt");
+	          myWriter.write(winner);
+	          myWriter.close();
+	        } catch (IOException e) {
+	          e.printStackTrace();
+	        }
+	}
 }
