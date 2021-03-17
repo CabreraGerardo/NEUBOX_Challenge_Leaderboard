@@ -73,18 +73,33 @@ public class LeaderBoard {
 	
 	public static void createFile(String winner) {
 		try {
-		      File myObj = new File("D:\\Tablero-Winner.txt");
+		  	JFileChooser chooser = new JFileChooser(); 
+		  	chooser.setCurrentDirectory(new java.io.File("."));
+		  	chooser.setDialogTitle("Select file destination");
+		  	chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		  	chooser.setAcceptAllFileFilterUsed(false);
+		
+	  	  	int returnVal = chooser.showOpenDialog(null);
+	  	  	String path = "";
+		  	if(returnVal == JFileChooser.APPROVE_OPTION) {
+		  		path = chooser.getSelectedFile().getPath();
+		        File myObj = new File(path + "\\Tablero-Winner.txt");
 		      
-		      myObj.createNewFile();
-		      writeFile(winner);		      
-		    } catch (IOException e) {
-		      e.printStackTrace();
+		        myObj.createNewFile();
+		        writeFile(myObj, winner);
 		    }
+		  	else {
+				System.out.println("No Selection ");
+			}
+	    } 
+		catch (IOException e) {
+	      e.printStackTrace();
+	    }
 	}
 	
-	public static void writeFile(String winner) {
+	public static void writeFile(File file, String winner) {
 		try {
-	          FileWriter myWriter = new FileWriter("D:\\Tablero-Winner.txt");
+	          FileWriter myWriter = new FileWriter(file.getPath());
 	          myWriter.write(winner);
 	          myWriter.close();
 	        } catch (IOException e) {
